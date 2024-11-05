@@ -1,7 +1,6 @@
 let count = 0;
 let spanRemovido = null;
 
-
 function adicionar() {
     // Recuperando o valor do elemenbto tarefa
     let tarefa = document.getElementById("tarefa").value;
@@ -29,6 +28,7 @@ function adicionar() {
         btn.textContent = "remover";
         btn.onclick = () => {
             lista.removeChild(li);
+            atualizarMensagem(lista);
         }
 
         //adicionando o buttojn criado no li 
@@ -37,14 +37,27 @@ function adicionar() {
         //Adicionando o li criado na lista
         lista.appendChild(li);
 
-        let mensagemNaoExiste = document.getElementById("nao-existe")
-        if(mensagemNaoExiste){
-            spanRemovido = mensagemNaoExiste;
-            mensagemNaoExiste.remove();
-        }
+        atualizarMensagem(lista);
+
     } else {
         alert("Insira uma tarefa!")
     }
 
     document.getElementById("tarefa").value = "";
+}
+
+
+function atualizarMensagem(lista){
+    if(lista.children.length === 0){
+        if (spanRemovido) {
+            document.querySelector(".tarefas").insertBefore(spanRemovido, document.querySelector(".tarefas").firstChild);
+            spanRemovido = null;
+        }
+    } else {
+        let mensagemNaoExiste = document.getElementById("nao-existe");
+        if(mensagemNaoExiste){
+            spanRemovido = mensagemNaoExiste;
+            mensagemNaoExiste.remove();
+        }
+    } 
 }
